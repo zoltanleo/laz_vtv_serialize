@@ -61,7 +61,6 @@ type
     property childVST: TLazVirtualStringTree read FchildVST;
     property ChildRecArr: TRecArr read FChildRecArr write SetChildRecArr;
     property ActList: TActionList read FActList;
-    procedure SaveTreeData;
   end;
 
 var
@@ -96,8 +95,8 @@ end;
 
 procedure TfrmChild.FormShow(Sender: TObject);
 begin
-  //SaveTreeData;
-  TVirtStringTreeHelper.SeralizeTree(FChildVST, ChildRecArr);
+  TVirtStringTreeHelper.SeralizeTree(FChildVST, FChildRecArr);
+  Caption:= 'qwerty';
 end;
 
 procedure TfrmChild.FillActionList;
@@ -176,11 +175,6 @@ procedure TfrmChild.SetChildRecArr(AValue: TRecArr);
 begin
   if FChildRecArr= AValue then Exit;
   FChildRecArr:= AValue;
-end;
-
-procedure TfrmChild.SaveTreeData;
-begin
-  //TVirtStringTreeHelper.SeralizeTree(FChildVST, ChildRecArr);
 end;
 
 end.

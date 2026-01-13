@@ -5,6 +5,7 @@
 *.exe
 *.lfm_
 *.pas_
+*.lps
 
 /lib
 /published

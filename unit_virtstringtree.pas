@@ -5,7 +5,12 @@ unit unit_virtstringtree;
 interface
 
 uses
-  Classes, SysUtils, laz.VirtualTrees, LCLIntf, LCLType;
+  Classes
+  , SysUtils
+  , laz.VirtualTrees
+  , LCLIntf
+  , LCLType
+  ;
 
 type
 
@@ -20,8 +25,11 @@ type
 
   TRecArr = array of TMyRecord;
 
-  // Вспомогательный класс для доступа к защищенным полям
+  // Вспомогательные классы для доступа к защищенным полям
   TBaseVirtualTreeAccess = class(TBaseVirtualTree)
+  end;
+
+  TLazVirtualStringTreeAccess = class(TLazVirtualStringTree)
   end;
 
   { TVirtStringTreeHelper }
@@ -29,10 +37,9 @@ type
   TVirtStringTreeHelper = class
   private
   public
-    class function GetRootNodeCnt(aTree: TBaseVirtualTree): PtrUInt;
     class function AddNode(aTree: TBaseVirtualTree; aNode: PVirtualNode; const AActionName, ACaption, AtsName: String): PVirtualNode;
     class procedure InitializeTree(aTree: TBaseVirtualTree); // устанавливает NodeDataSize
-    class procedure SeralizeTree(aTree: TBaseVirtualTree; aRecArr: TRecArr);
+    class procedure SeralizeTree(aTree: TBaseVirtualTree; out aRecArr: TRecArr);
     class procedure DeseralizeTree(aTree: TBaseVirtualTree; aRecArr: TRecArr);
   end;
 
@@ -40,23 +47,6 @@ type
 implementation
 
 { TVirtStringTreeHelper }
-
-class function TVirtStringTreeHelper.GetRootNodeCnt(aTree: TBaseVirtualTree): PtrUInt;
-var
-  Node: PVirtualNode = nil;
-  cnt: PtrUInt = 0;
-begin
-  Result:= 0;
-  Node:= aTree.GetFirst;
-
-  while Assigned(Node) do
-  begin
-    Inc(cnt);
-    Result:= cnt;
-    Node:= Node^.NextSibling;
-  end;
-end;
-
 class function TVirtStringTreeHelper.AddNode(aTree: TBaseVirtualTree;
   aNode: PVirtualNode; const AActionName, ACaption, AtsName: String): PVirtualNode;
 var
@@ -64,11 +54,14 @@ var
   ParentID: SizeInt = 0;
 begin
   Result := aTree.AddChild(aNode);
-  Data := aTree.GetNodeData(Result);
 
-  if not Assigned(aNode)
-     then ParentID := -1
-     else ParentID := PMyRecord(aTree.GetNodeData(Result))^.ID;
+  if Assigned(aNode) then
+  begin
+    Data:= aTree.GetNodeData(aNode);
+    ParentID := Data^.ID;
+  end else ParentID := -1;
+
+  Data:= aTree.GetNodeData(Result);
 
   Data^.ID := aTree.AbsoluteIndex(Result);
   Data^.ParentID := ParentID;
@@ -83,9 +76,11 @@ begin
   TBaseVirtualTreeAccess(aTree).NodeDataSize := SizeOf(TMyRecord);
 end;
 
-class procedure TVirtStringTreeHelper.SeralizeTree(aTree: TBaseVirtualTree; aRecArr: TRecArr);
+class procedure TVirtStringTreeHelper.SeralizeTree(aTree: TBaseVirtualTree; out aRecArr: TRecArr);
 var
   Node: PVirtualNode = nil;
+  RecArr: TRecArr;
+  i: SizeInt = 0;
 
   procedure AddNodeDataToRecArr(aTree: TBaseVirtualTree; aNode: PVirtualNode);
   var
@@ -97,8 +92,8 @@ var
       Data:= nil;
       Data:= aTree.GetNodeData(aNode);
 
-      SetLength(aRecArr,Length(aRecArr) + 1);
-      aRecArr[High(aRecArr)]:= Data^;
+      SetLength(RecArr,Length(RecArr) + 1);
+      RecArr[High(RecArr)]:= Data^;
 
       if (aNode^.ChildCount > 0) then
       begin
@@ -111,16 +106,102 @@ var
   end;
 
 begin
-  if (GetRootNodeCnt(aTree) = 0) then Exit;
+  //если дерево пустое
+  if (TLazVirtualStringTreeAccess(aTree).RootNodeCount = 0) then Exit;
 
-  SetLength(aRecArr,0);
+  SetLength(RecArr,0);
   Node:= aTree.GetFirst;
   AddNodeDataToRecArr(aTree, Node);
+
+  //заполняем данными выходной буфер(массив)
+  SetLength(aRecArr,0);
+
+  for i := 0 to High(RecArr) do
+  begin
+    SetLength(aRecArr,Length(aRecArr) + 1);
+    aRecArr[High(aRecArr)]:= RecArr[i];
+  end;
 end;
 
 class procedure TVirtStringTreeHelper.DeseralizeTree(aTree: TBaseVirtualTree; aRecArr: TRecArr);
-begin
+var
+  tmpParentID: SizeInt = 0;
+  tmpRecArr: TRecArr;
+  i: SizeInt = 0;
 
+  //возвращает кол-во элементов с ParentID = ChildID во входном массиве InRecArr,
+  //при их наличии заполняет ими выходной массив OutRecArr
+  function GetChildRecords(ChildID: SizeInt; InRecArr: TRecArr; out OutRecArr: TRecArr):SizeInt;
+  var
+    idx: SizeInt  = 0;
+  begin
+    Result:= 0;
+
+    for idx := 0 to High(InRecArr) do
+      if (InRecArr[idx].ParentID = ChildID) then Inc(Result);
+
+    if (Result = 0) then Exit;
+
+    SetLength(OutRecArr,0);//инициализируем выходной буфер-массив
+
+    for idx := 0 to High(InRecArr) do
+      if (InRecArr[idx].ParentID = ChildID) then
+      begin
+        SetLength(OutRecArr,Length(OutRecArr) + 1);
+        OutRecArr[High(OutRecArr)]:= InRecArr[idx];
+      end;
+  end;
+
+  //добавляет в дерево aTree узлы одного aParentID, если ParentNode определен,
+  //то узлы будут дочерними, иначе - корневыми
+  procedure AddNodeFromArray(aParentID: SizeInt; ParentNode: PVirtualNode = nil);
+  var
+    dNode: PVirtualNode = nil;
+    Data: PMyRecord = nil;
+    _RecArr: TRecArr;
+    j: SizeInt = 0;
+  begin
+    if (GetChildRecords(aParentID,aRecArr,_RecArr) = 0) then Exit;
+
+    for j := 0 to High(_RecArr) do
+    begin
+      dNode:= aTree.AddChild(ParentNode);
+      Data:= aTree.GetNodeData(dNode);
+      Data^:= _RecArr[j];
+    end;
+
+    if Assigned(ParentNode)
+      then dNode:= ParentNode^.FirstChild
+      else dNode:= aTree.GetFirst;
+
+    while Assigned(dNode) do
+    begin
+      Data:= aTree.GetNodeData(dNode);
+      AddNodeFromArray(Data^.ID, dNode);//добавляем вложенные узлы
+      dNode:= dNode^.NextSibling;
+    end;
+  end;
+begin
+  aTree.BeginUpdate;
+  try
+    aTree.Clear;
+
+    //если входной буфер-массив пуст
+    if (Length(aRecArr) = 0) then Exit;
+
+    tmpParentID:= 10000000;//задаем макс.вероятное значение
+
+    //ищем наименьший ParentID (имеют root-узлы)
+    for i:= 0 to High(aRecArr) do
+      if (aRecArr[i].ParentID < tmpParentID) then tmpParentID:= aRecArr[i].ParentID;
+
+    //ищем root-узлы
+    if (GetChildRecords(tmpParentID,aRecArr,tmpRecArr) = 0) then Exit;
+
+    AddNodeFromArray(tmpParentID);//ищем дочерние записи
+  finally
+    aTree.EndUpdate;
+  end;
 end;
 
 

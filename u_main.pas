@@ -55,12 +55,11 @@ begin
     BorderStyle:= bsNone;
     Align:= alClient;
     ShowInTaskBar:= stNever;
-    FchildFrm.SaveTreeData;// Сохраняем дерево из дочернего модуля
     Show;
   end;
 
   // Загружаем в основное дерево
-  LoadTreeFromChild;
+  LoadTreeFromChild
 end;
 
 procedure TfrmMain.vstMainNodeClick(Sender: TBaseVirtualTree;
