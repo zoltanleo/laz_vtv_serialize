@@ -156,7 +156,7 @@ var
   //то узлы будут дочерними, иначе - корневыми
   procedure AddNodeFromArray(aParentID: SizeInt; ParentNode: PVirtualNode = nil);
   var
-    dNode: PVirtualNode = nil;
+    Node: PVirtualNode = nil;
     Data: PMyRecord = nil;
     _RecArr: TRecArr;
     j: SizeInt = 0;
@@ -165,20 +165,20 @@ var
 
     for j := 0 to High(_RecArr) do
     begin
-      dNode:= aTree.AddChild(ParentNode);
-      Data:= aTree.GetNodeData(dNode);
+      Node:= aTree.AddChild(ParentNode);
+      Data:= aTree.GetNodeData(Node);
       Data^:= _RecArr[j];
     end;
 
     if Assigned(ParentNode)
-      then dNode:= ParentNode^.FirstChild
-      else dNode:= aTree.GetFirst;
+      then Node:= ParentNode^.FirstChild
+      else Node:= aTree.GetFirst;
 
-    while Assigned(dNode) do
+    while Assigned(Node) do
     begin
-      Data:= aTree.GetNodeData(dNode);
-      AddNodeFromArray(Data^.ID, dNode);//добавляем вложенные узлы
-      dNode:= dNode^.NextSibling;
+      Data:= aTree.GetNodeData(Node);
+      AddNodeFromArray(Data^.ID, Node);//добавляем вложенные узлы
+      Node:= Node^.NextSibling;
     end;
   end;
 begin
