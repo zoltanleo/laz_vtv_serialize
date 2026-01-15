@@ -10,7 +10,7 @@
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="4" Y="14"/>
-        <UsageCount Value="34"/>
+        <UsageCount Value="42"/>
       </Unit>
       <Unit>
         <Filename Value="u_main.pas"/>
@@ -18,10 +18,10 @@
         <ComponentName Value="frmMain"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <TopLine Value="41"/>
-        <CursorPos X="20" Y="62"/>
-        <FoldState Value=" T3iL0P111 PiJi40#"/>
-        <UsageCount Value="34"/>
+        <TopLine Value="59"/>
+        <CursorPos X="36" Y="71"/>
+        <FoldState Value=" T3jc0C2 PiAK0g"/>
+        <UsageCount Value="42"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit>
@@ -31,23 +31,22 @@
         <ComponentName Value="frmChild"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="94"/>
-        <CursorPos Y="166"/>
-        <FoldState Value=" T3jF0oW"/>
-        <UsageCount Value="34"/>
+        <TopLine Value="186"/>
+        <CursorPos X="112" Y="200"/>
+        <UsageCount Value="42"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="unit_virtstringtree.pas"/>
         <IsPartOfProject Value="True"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="2"/>
-        <TopLine Value="155"/>
-        <CursorPos X="5" Y="159"/>
+        <TopLine Value="29"/>
+        <CursorPos Y="49"/>
         <FoldState Value=" T3i66L221 PiPif2b"/>
-        <UsageCount Value="33"/>
+        <UsageCount Value="41"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -68,11 +67,10 @@
       <Unit>
         <Filename Value="C:\lazarus\laz_test\lazarus\components\virtualtreeview\laz.virtualtrees.pas"/>
         <UnitName Value="laz.VirtualTrees"/>
-        <EditorIndex Value="3"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="33643"/>
         <CursorPos Y="33663"/>
         <UsageCount Value="12"/>
-        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="C:\lazarus\laz_test\fpcsrc\rtl\inc\systemh.inc"/>
@@ -81,127 +79,134 @@
         <CursorPos X="18" Y="124"/>
         <UsageCount Value="10"/>
       </Unit>
+      <Unit>
+        <Filename Value="metadarkstyle.pas"/>
+        <UnitName Value="MetaDarkStyle"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="3" Y="11"/>
+        <UsageCount Value="10"/>
+      </Unit>
     </Units>
     <JumpHistory HistoryIndex="29">
       <Position>
-        <Filename Value="unit_virtstringtree.pas"/>
-        <Caret Line="144" TopLine="120"/>
+        <Filename Value="u_child.pas"/>
+        <Caret Line="162" Column="101" TopLine="94"/>
+      </Position>
+      <Position>
+        <Filename Value="u_child.pas"/>
+        <Caret Line="163" Column="101" TopLine="95"/>
+      </Position>
+      <Position>
+        <Filename Value="u_child.pas"/>
+        <Caret Line="164" Column="101" TopLine="96"/>
+      </Position>
+      <Position>
+        <Filename Value="u_child.pas"/>
+        <Caret Line="165" Column="101" TopLine="97"/>
+      </Position>
+      <Position>
+        <Filename Value="u_child.pas"/>
+        <Caret Line="164" Column="101" TopLine="96"/>
+      </Position>
+      <Position>
+        <Filename Value="u_child.pas"/>
+        <Caret Line="170" Column="101" TopLine="97"/>
+      </Position>
+      <Position>
+        <Filename Value="u_child.pas"/>
+        <Caret Line="107" Column="11" TopLine="91"/>
+      </Position>
+      <Position>
+        <Filename Value="u_main.pas"/>
+        <Caret Line="78" Column="38" TopLine="65"/>
+      </Position>
+      <Position>
+        <Filename Value="u_main.pas"/>
+        <Caret Line="97" Column="28" TopLine="71"/>
+      </Position>
+      <Position>
+        <Filename Value="u_child.pas"/>
+        <Caret Line="109" Column="3" TopLine="98"/>
+      </Position>
+      <Position>
+        <Filename Value="u_child.pas"/>
+        <Caret Line="110" TopLine="99"/>
+      </Position>
+      <Position>
+        <Filename Value="u_child.pas"/>
+        <Caret Line="109" TopLine="98"/>
+      </Position>
+      <Position>
+        <Filename Value="u_main.pas"/>
+        <Caret Line="93" TopLine="62"/>
+      </Position>
+      <Position>
+        <Filename Value="u_main.pas"/>
+        <Caret Line="92" TopLine="61"/>
+      </Position>
+      <Position>
+        <Filename Value="u_child.pas"/>
+        <Caret Line="110" TopLine="99"/>
+      </Position>
+      <Position>
+        <Filename Value="u_child.pas"/>
+        <Caret Line="109" TopLine="98"/>
+      </Position>
+      <Position>
+        <Filename Value="u_main.pas"/>
+        <Caret Line="78" Column="35" TopLine="62"/>
+      </Position>
+      <Position>
+        <Filename Value="u_main.pas"/>
+        <Caret Line="176" Column="45" TopLine="151"/>
+      </Position>
+      <Position>
+        <Filename Value="u_child.pas"/>
+        <Caret Line="114" Column="48" TopLine="102"/>
+      </Position>
+      <Position>
+        <Filename Value="u_child.pas"/>
+        <Caret Line="107" TopLine="105"/>
+      </Position>
+      <Position>
+        <Filename Value="u_child.pas"/>
+        <Caret Line="64" Column="50" TopLine="57"/>
+      </Position>
+      <Position>
+        <Filename Value="u_child.pas"/>
+        <Caret Line="111" Column="20" TopLine="101"/>
+      </Position>
+      <Position>
+        <Filename Value="u_child.pas"/>
+        <Caret Line="110" Column="7" TopLine="95"/>
       </Position>
       <Position>
         <Filename Value="unit_virtstringtree.pas"/>
-        <Caret Line="132" TopLine="120"/>
+        <Caret Line="40" Column="42" TopLine="8"/>
       </Position>
       <Position>
         <Filename Value="unit_virtstringtree.pas"/>
-        <Caret Line="161" TopLine="149"/>
+        <Caret Line="61" Column="3" TopLine="59"/>
       </Position>
       <Position>
-        <Filename Value="unit_virtstringtree.pas"/>
-        <Caret Line="132" TopLine="68"/>
+        <Filename Value="u_main.pas"/>
+        <Caret Line="72" TopLine="63"/>
       </Position>
       <Position>
-        <Filename Value="unit_virtstringtree.pas"/>
-        <Caret Line="161" TopLine="149"/>
+        <Filename Value="u_child.pas"/>
+        <Caret Line="70" Column="69" TopLine="58"/>
       </Position>
       <Position>
-        <Filename Value="unit_virtstringtree.pas"/>
-        <Caret Line="159" TopLine="149"/>
+        <Filename Value="u_child.pas"/>
+        <Caret Line="66" Column="53" TopLine="52"/>
       </Position>
       <Position>
-        <Filename Value="unit_virtstringtree.pas"/>
-        <Caret Line="154" TopLine="149"/>
+        <Filename Value="u_child.pas"/>
+        <Caret Line="241" Column="80" TopLine="213"/>
       </Position>
       <Position>
-        <Filename Value="unit_virtstringtree.pas"/>
-        <Caret Line="156" TopLine="149"/>
-      </Position>
-      <Position>
-        <Filename Value="unit_virtstringtree.pas"/>
-        <Caret Line="157" TopLine="149"/>
-      </Position>
-      <Position>
-        <Filename Value="unit_virtstringtree.pas"/>
-        <Caret Line="133" TopLine="74"/>
-      </Position>
-      <Position>
-        <Filename Value="unit_virtstringtree.pas"/>
-        <Caret Line="136" TopLine="74"/>
-      </Position>
-      <Position>
-        <Filename Value="unit_virtstringtree.pas"/>
-        <Caret Line="137" TopLine="74"/>
-      </Position>
-      <Position>
-        <Filename Value="unit_virtstringtree.pas"/>
-        <Caret Line="136" TopLine="74"/>
-      </Position>
-      <Position>
-        <Filename Value="unit_virtstringtree.pas"/>
-        <Caret Line="137" TopLine="74"/>
-      </Position>
-      <Position>
-        <Filename Value="unit_virtstringtree.pas"/>
-        <Caret Line="136" TopLine="74"/>
-      </Position>
-      <Position>
-        <Filename Value="unit_virtstringtree.pas"/>
-        <Caret Line="137" TopLine="74"/>
-      </Position>
-      <Position>
-        <Filename Value="unit_virtstringtree.pas"/>
-        <Caret Line="136" TopLine="74"/>
-      </Position>
-      <Position>
-        <Filename Value="unit_virtstringtree.pas"/>
-        <Caret Line="144" TopLine="120"/>
-      </Position>
-      <Position>
-        <Filename Value="unit_virtstringtree.pas"/>
-        <Caret Line="132" TopLine="120"/>
-      </Position>
-      <Position>
-        <Filename Value="unit_virtstringtree.pas"/>
-        <Caret Line="161" TopLine="149"/>
-      </Position>
-      <Position>
-        <Filename Value="unit_virtstringtree.pas"/>
-        <Caret Line="132" TopLine="68"/>
-      </Position>
-      <Position>
-        <Filename Value="unit_virtstringtree.pas"/>
-        <Caret Line="161" TopLine="149"/>
-      </Position>
-      <Position>
-        <Filename Value="unit_virtstringtree.pas"/>
-        <Caret Line="159" TopLine="149"/>
-      </Position>
-      <Position>
-        <Filename Value="unit_virtstringtree.pas"/>
-        <Caret Line="132" TopLine="120"/>
-      </Position>
-      <Position>
-        <Filename Value="unit_virtstringtree.pas"/>
-        <Caret Line="181" TopLine="149"/>
-      </Position>
-      <Position>
-        <Filename Value="unit_virtstringtree.pas"/>
-        <Caret Line="200" Column="54" TopLine="184"/>
-      </Position>
-      <Position>
-        <Filename Value="unit_virtstringtree.pas"/>
-        <Caret Line="168" Column="30" TopLine="131"/>
-      </Position>
-      <Position>
-        <Filename Value="unit_virtstringtree.pas"/>
-        <Caret Line="172" Column="35" TopLine="156"/>
-      </Position>
-      <Position>
-        <Filename Value="unit_virtstringtree.pas"/>
-        <Caret Line="195" TopLine="171"/>
-      </Position>
-      <Position>
-        <Filename Value="unit_virtstringtree.pas"/>
-        <Caret Line="124" TopLine="67"/>
+        <Filename Value="u_child.pas"/>
+        <Caret Line="112" Column="48" TopLine="96"/>
       </Position>
     </JumpHistory>
     <RunParams>
@@ -212,27 +217,13 @@
   <Debugging>
     <Watches>
       <Item>
-        <Expression Value="aRecArr"/>
-        <DisplayFormat ArrayNavBarInherit="False"/>
+        <Expression Value="sss.ClassName"/>
       </Item>
       <Item>
-        <Expression Value="tmpRecArr"/>
-        <DisplayFormat ArrayNavBarInherit="False"/>
+        <Expression Value="sss.ClassType"/>
       </Item>
       <Item>
-        <Expression Value="i"/>
-      </Item>
-      <Item>
-        <Expression Value="j"/>
-      </Item>
-      <Item>
-        <Expression Value="ParentNode"/>
-      </Item>
-      <Item>
-        <Expression Value="Node"/>
-      </Item>
-      <Item>
-        <Expression Value="Data"/>
+        <Expression Value="sss.ClassInfo"/>
       </Item>
     </Watches>
   </Debugging>

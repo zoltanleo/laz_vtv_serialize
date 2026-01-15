@@ -27,6 +27,8 @@ type
     Splitter1: TSplitter;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure vstMainAddToSelection(Sender: TBaseVirtualTree; Node: PVirtualNode
+      );
 
   private
     FchildFrm: TfrmChild;
@@ -62,8 +64,37 @@ begin
   LoadTreeFromChild
 end;
 
-procedure TfrmMain.vstMainNodeClick(Sender: TBaseVirtualTree;
-  const HitInfo: THitInfo);
+procedure TfrmMain.vstMainAddToSelection(Sender: TBaseVirtualTree;
+  Node: PVirtualNode);
+var
+  Data: PMyRecord = nil;
+  //Act: TBasicAction = nil;
+begin
+  Data := TBaseVirtualTree(Sender).GetNodeData(Node);
+  if not Assigned(Data) then Exit;
+
+    // --- Устанавливаем свойство, передав строку ---
+  FchildFrm.CurrentActivePageName := Data^.tsName; // <<< Вот здесь
+
+  //FchildFrm.PageControl1Change(Data^.tsName);
+
+  // Ищем действие в ActList дочернего модуля
+  //Act := FchildFrm.ActList.FindComponent(Data^.ActionName) as TBasicAction;
+
+  //if Assigned(Act) then FchildFrm.PageControl1Change(Act);
+
+  //if Assigned(Act) then
+  //begin
+  //  ShowMessage('Executing Action: ' + Act.Name);
+  //  Act.Execute;
+  //end
+  //else
+  //begin
+  //  ShowMessage('Action not found: ' + Data^.ActionName);
+  //end;
+end;
+
+procedure TfrmMain.vstMainNodeClick(Sender: TBaseVirtualTree;const HitInfo: THitInfo);
 var
   Node: PVirtualNode = nil;
   Data: PMyRecord = nil;
@@ -74,7 +105,7 @@ begin
   begin
     Data := TBaseVirtualTree(Sender).GetNodeData(Node);
 
-    // Ищем действие в ActList дочернего модуля
+     //Ищем действие в ActList дочернего модуля
     Act := FchildFrm.ActList.FindComponent(Data^.ActionName) as TBasicAction;
 
     if Assigned(Act) then
@@ -86,6 +117,8 @@ begin
     begin
       ShowMessage('Action not found: ' + Data^.ActionName);
     end;
+
+
   end;
 end;
 
@@ -150,12 +183,11 @@ begin
 
       SelectionOptions := SelectionOptions +
         [toExtendedFocus, toFullRowSelect, toCenterScrollIntoView,
-        toAlwaysSelectNode] - [];
+        toAlwaysSelectNode] - [toMultiSelect];
     end;
 
-    OnNodeClick := @vstMainNodeClick;
+    //OnNodeClick := @vstMainNodeClick;
     OnGetText:= @vstMainGetText;
-
   end;
 
 

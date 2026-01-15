@@ -2,10 +2,10 @@ object frmMain: TfrmMain
   Left = 437
   Height = 498
   Top = 232
-  Width = 681
+  Width = 910
   Caption = 'frmMain'
   ClientHeight = 498
-  ClientWidth = 681
+  ClientWidth = 910
   DesignTimePPI = 120
   LCLVersion = '4.99.0.0'
   OnCreate = FormCreate
@@ -19,7 +19,7 @@ object frmMain: TfrmMain
     Left = 10
     Height = 478
     Top = 10
-    Width = 220
+    Width = 302
     Anchors = [akTop, akLeft, akRight, akBottom]
     BorderSpacing.Around = 10
     DefaultText = 'Node'
@@ -27,12 +27,13 @@ object frmMain: TfrmMain
     Header.Columns = <>
     Header.MainColumn = -1
     TabOrder = 0
+    OnAddToSelection = vstMainAddToSelection
   end
   object Splitter1: TSplitter
     AnchorSideTop.Control = vstMain
     AnchorSideBottom.Control = vstMain
     AnchorSideBottom.Side = asrBottom
-    Left = 240
+    Left = 322
     Height = 478
     Top = 10
     Width = 6
@@ -49,12 +50,15 @@ object frmMain: TfrmMain
     AnchorSideRight.Side = asrBottom
     AnchorSideBottom.Control = Owner
     AnchorSideBottom.Side = asrBottom
-    Left = 256
+    Left = 338
     Height = 478
     Top = 10
-    Width = 415
+    Width = 562
     Anchors = [akTop, akLeft, akRight, akBottom]
-    BorderSpacing.Around = 10
+    BorderSpacing.Left = 10
+    BorderSpacing.Top = 10
+    BorderSpacing.Right = 10
+    BorderSpacing.Bottom = 10
     Caption = 'Panel1'
     TabOrder = 2
   end
