@@ -37,6 +37,8 @@ type
   TVirtStringTreeHelper = class
   private
   public
+    class function GetNodeDataSizeHelper: LongInt;
+    class function GetRootNodeCountHelper(aTree: TBaseVirtualTree): LongWord;
     class function AddNode(aTree: TBaseVirtualTree; aNode: PVirtualNode; const AActionName, ACaption, AtsName: String): PVirtualNode;
     class procedure InitializeTree(aTree: TBaseVirtualTree); // устанавливает NodeDataSize
     class procedure SeralizeTree(aTree: TBaseVirtualTree; out aRecArr: TRecArr);
@@ -45,6 +47,25 @@ type
 
 
 implementation
+
+class function TVirtStringTreeHelper.GetNodeDataSizeHelper: LongInt;
+begin
+  Result := SizeOf(TMyRecord);
+end;
+
+class function TVirtStringTreeHelper.GetRootNodeCountHelper(aTree: TBaseVirtualTree): LongWord;
+var
+  Node: PVirtualNode = nil;
+begin
+  Result:= 0;
+
+  Node:= aTree.GetFirst;
+  while Assigned(Node) do
+  begin
+    Inc(Result);
+    Node:= Node^.NextSibling;
+  end;
+end;
 
 { TVirtStringTreeHelper }
 class function TVirtStringTreeHelper.AddNode(aTree: TBaseVirtualTree;
@@ -107,7 +128,8 @@ var
 
 begin
   //если дерево пустое
-  if (TLazVirtualStringTreeAccess(aTree).RootNodeCount = 0) then Exit;
+  //if (TLazVirtualStringTreeAccess(aTree).RootNodeCount = 0) then Exit;//--> иногда дает ошибку приведения типа при вызове в стороннем модуле
+  if (GetRootNodeCountHelper(aTree) = 0) then Exit;
 
   SetLength(RecArr,0);
   Node:= aTree.GetFirst;

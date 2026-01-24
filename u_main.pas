@@ -145,7 +145,8 @@ end;
 procedure TfrmMain.FormCreate(Sender: TObject);
 begin
   // Настройка дерева
-  TVirtStringTreeHelper.InitializeTree(vstMain);
+  //TVirtStringTreeHelper.InitializeTree(vstMain);//--> иногда дает ошибку приведения типа при вызове в стороннем модуле
+  vstMain.NodeDataSize:= TVirtStringTreeHelper.GetNodeDataSizeHelper;
 
   with vstMain do
   begin

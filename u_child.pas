@@ -83,7 +83,11 @@ implementation
 procedure TfrmChild.FormCreate(Sender: TObject);
 begin
   FchildVST:= TLazVirtualStringTree.Create(Self);
-  TVirtStringTreeHelper.InitializeTree(FChildVST); // устанавливаем NodeDataSize
+
+  // устанавливаем NodeDataSize
+  //TVirtStringTreeHelper.InitializeTree(FChildVST);//--> иногда дает ошибку приведения типа при вызове в стороннем модуле
+  childVST.NodeDataSize:= TVirtStringTreeHelper.GetNodeDataSizeHelper;
+
   FActList:= TActionList.Create(Self);
 
   FillActionList;
