@@ -60,7 +60,7 @@ begin
     Show;
   end;
 
-  // Загружаем в основное дерево
+  // Load a main Tree
   LoadTreeFromChild
 end;
 
@@ -73,12 +73,12 @@ begin
   Data := TBaseVirtualTree(Sender).GetNodeData(Node);
   if not Assigned(Data) then Exit;
 
-    // --- Устанавливаем свойство, передав строку ---
-  FchildFrm.CurrentActivePageName := Data^.tsName; // <<< Вот здесь
+    // --- Setting the property by passing the string ---
+  FchildFrm.CurrentActivePageName := Data^.tsName; // <<< here
 
   //FchildFrm.PageControl1Change(Data^.tsName);
 
-  // Ищем действие в ActList дочернего модуля
+  // Looking for an action in the child module's ActList
   //Act := FchildFrm.ActList.FindComponent(Data^.ActionName) as TBasicAction;
 
   //if Assigned(Act) then FchildFrm.PageControl1Change(Act);
@@ -105,7 +105,7 @@ begin
   begin
     Data := TBaseVirtualTree(Sender).GetNodeData(Node);
 
-     //Ищем действие в ActList дочернего модуля
+     //Looking for an action in the child module's ActList
     Act := FchildFrm.ActList.FindComponent(Data^.ActionName) as TBasicAction;
 
     if Assigned(Act) then
@@ -139,13 +139,13 @@ end;
 procedure TfrmMain.LoadTreeFromChild;
 begin
   vstMain.Clear;
-  TVirtStringTreeHelper.DeseralizeTree(vstMain, FchildFrm.ChildRecArr);
+  TVirtStringTreeHelper.DeserializeTree(vstMain, FchildFrm.ChildRecArr);
 end;
 
 procedure TfrmMain.FormCreate(Sender: TObject);
 begin
-  // Настройка дерева
-  //TVirtStringTreeHelper.InitializeTree(vstMain);//--> иногда дает ошибку приведения типа при вызове в стороннем модуле
+  // Setting up the tree
+  //TVirtStringTreeHelper.InitializeTree(vstMain);//--> sometimes it gives a type conversion error when called in a third-party module.
   vstMain.NodeDataSize:= TVirtStringTreeHelper.GetNodeDataSizeHelper;
 
   with vstMain do
@@ -166,7 +166,9 @@ begin
       //Columns[0].Style:= vsOwnerDraw;
 
       Height := Canvas.TextHeight('W') * 3 div 2;
-      Options := Options + [hoAutoResize, hoOwnerDraw, hoShowHint, hoShowImages, hoVisible];
+      Options := Options + [hoAutoResize, hoOwnerDraw, hoShowHint, hoShowImages
+      //, hoVisible
+      ];
     end;
 
     with TreeOptions do

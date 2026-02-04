@@ -58,7 +58,7 @@ type
     FActList: TActionList;
     FChildRecArr: TRecArr;
     FchildVST: TLazVirtualStringTree;
-    FPendingPageName: String; // --- Новое закрытое строковое поле ---
+    FPendingPageName: String; // --- New private string field ---
     procedure FillActionList;
     procedure CreateTree;
     procedure SetChildRecArr(AValue: TRecArr);
@@ -84,8 +84,8 @@ procedure TfrmChild.FormCreate(Sender: TObject);
 begin
   FchildVST:= TLazVirtualStringTree.Create(Self);
 
-  // устанавливаем NodeDataSize
-  //TVirtStringTreeHelper.InitializeTree(FChildVST);//--> иногда дает ошибку приведения типа при вызове в стороннем модуле
+  // setting NodeDataSize
+  //TVirtStringTreeHelper.InitializeTree(FChildVST);//--> sometimes it gives a type conversion error when called in a third-party module.
   childVST.NodeDataSize:= TVirtStringTreeHelper.GetNodeDataSizeHelper;
 
   FActList:= TActionList.Create(Self);
@@ -107,7 +107,7 @@ end;
 
 procedure TfrmChild.FormShow(Sender: TObject);
 begin
-  TVirtStringTreeHelper.SeralizeTree(FChildVST, FChildRecArr);
+  TVirtStringTreeHelper.SerializeTree(FChildVST, FChildRecArr);
   Caption:= 'qwerty';
 end;
 
@@ -198,7 +198,7 @@ var
   ChildNode: PVirtualNode = nil;
   NestedChildNode: PVirtualNode = nil;
 begin
-  // Создаем узлы с помощью хелпера
+  // Creating nodes using the helper
   RootNode := TVirtStringTreeHelper.AddNode(FChildVST, nil, 'ActOneRoot', 'Node One', 'tsOne');
   ChildNode := TVirtStringTreeHelper.AddNode(FChildVST, RootNode, 'ActOneChild_1', 'Node One Child 1', 'tsOne_1');
   ChildNode := TVirtStringTreeHelper.AddNode(FChildVST, RootNode, 'ActOneChild_2', 'Node One Child 2', 'tsOne_2');
@@ -228,9 +228,9 @@ var
   i: Integer;
   FoundTabSheet: TTabSheet;
 begin
-  FPendingPageName := AName;// Сохраняем имя, если нужно
+  FPendingPageName := AName;// Save the name if necessary.
 
-  // Логика поиска и установки вкладки
+  // The logic of tab search and installation
   FoundTabSheet := nil;
 
   for i := 0 to Pred(PageControl1.PageCount) do

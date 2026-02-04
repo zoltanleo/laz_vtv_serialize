@@ -16,16 +16,16 @@ type
 
   PMyRecord = ^TMyRecord;
   TMyRecord = record
-    ID: SizeInt;          // ID узла дерева
-    ParentID: SizeInt;    // содержит для child-узла ID root-узла (для root-узла равен -1)
-    ActionName: String;   // ссылка-имя на Action в произвольном ActList
-    Caption: String;      // заголовок узла
-    tsName: String;       // имя вкладки PageControl
+    ID: SizeInt;          //  tree node ID
+    ParentID: SizeInt;    // contains the root node ID for the child node (-1 for the root node)
+    ActionName: String;   // link-name of an Action in a custom ActList
+    Caption: String;      // node header
+    tsName: String;       // name of the PageControl tab
   end;
 
   TRecArr = array of TMyRecord;
 
-  // Вспомогательные классы для доступа к защищенным полям
+  // Auxiliary classes for accessing protected fields
   TBaseVirtualTreeAccess = class(TBaseVirtualTree)
   end;
 
@@ -41,8 +41,8 @@ type
     class function GetRootNodeCountHelper(aTree: TBaseVirtualTree): LongWord;
     class function AddNode(aTree: TBaseVirtualTree; aNode: PVirtualNode; const AActionName, ACaption, AtsName: String): PVirtualNode;
     class procedure InitializeTree(aTree: TBaseVirtualTree); // устанавливает NodeDataSize
-    class procedure SeralizeTree(aTree: TBaseVirtualTree; out aRecArr: TRecArr);
-    class procedure DeseralizeTree(aTree: TBaseVirtualTree; aRecArr: TRecArr);
+    class procedure SerializeTree(aTree: TBaseVirtualTree; out aRecArr: TRecArr);
+    class procedure DeserializeTree(aTree: TBaseVirtualTree; aRecArr: TRecArr);
   end;
 
 
@@ -97,7 +97,8 @@ begin
   TBaseVirtualTreeAccess(aTree).NodeDataSize := SizeOf(TMyRecord);
 end;
 
-class procedure TVirtStringTreeHelper.SeralizeTree(aTree: TBaseVirtualTree; out aRecArr: TRecArr);
+class procedure TVirtStringTreeHelper.SerializeTree(aTree: TBaseVirtualTree;
+  out aRecArr: TRecArr);
 var
   Node: PVirtualNode = nil;
   RecArr: TRecArr;
@@ -127,15 +128,15 @@ var
   end;
 
 begin
-  //если дерево пустое
-  //if (TLazVirtualStringTreeAccess(aTree).RootNodeCount = 0) then Exit;//--> иногда дает ошибку приведения типа при вызове в стороннем модуле
+  //if the tree is empty
+  //if (TLazVirtualStringTreeAccess(aTree).RootNodeCount = 0) then Exit;//--> sometimes it gives a type conversion error when called in a third-party module.
   if (GetRootNodeCountHelper(aTree) = 0) then Exit;
 
   SetLength(RecArr,0);
   Node:= aTree.GetFirst;
   AddNodeDataToRecArr(aTree, Node);
 
-  //заполняем данными выходной буфер(массив)
+  //filling the output buffer (array) with data
   SetLength(aRecArr,0);
 
   for i := 0 to High(RecArr) do
@@ -145,14 +146,15 @@ begin
   end;
 end;
 
-class procedure TVirtStringTreeHelper.DeseralizeTree(aTree: TBaseVirtualTree; aRecArr: TRecArr);
+class procedure TVirtStringTreeHelper.DeserializeTree(aTree: TBaseVirtualTree;
+  aRecArr: TRecArr);
 var
   tmpParentID: SizeInt = 0;
   tmpRecArr: TRecArr;
   i: SizeInt = 0;
 
-  //возвращает кол-во элементов с ParentID = ChildID во входном массиве InRecArr,
-  //при их наличии заполняет ими выходной массив OutRecArr
+  //returns the number of elements with ParentID = childID in the InRecArr input array,
+  //if available, fills the OutRecArr output array with them
   function GetChildRecords(ChildID: SizeInt; InRecArr: TRecArr; out OutRecArr: TRecArr):SizeInt;
   var
     idx: SizeInt  = 0;
@@ -174,8 +176,8 @@ var
       end;
   end;
 
-  //добавляет в дерево aTree узлы одного aParentID, если ParentNode определен,
-  //то узлы будут дочерними, иначе - корневыми
+  //adds nodes of the same aParentID to the aTree tree if parentNode is defined,
+  //then the nodes will be child nodes, otherwise they will be root nodes
   procedure AddNodeFromArray(aParentID: SizeInt; ParentNode: PVirtualNode = nil);
   var
     Node: PVirtualNode = nil;
@@ -199,7 +201,7 @@ var
     while Assigned(Node) do
     begin
       Data:= aTree.GetNodeData(Node);
-      AddNodeFromArray(Data^.ID, Node);//добавляем вложенные узлы
+      AddNodeFromArray(Data^.ID, Node);//adding nested nodes
       Node:= Node^.NextSibling;
     end;
   end;
@@ -208,19 +210,19 @@ begin
   try
     aTree.Clear;
 
-    //если входной буфер-массив пуст
+    //if the input buffer is empty, the array is empty
     if (Length(aRecArr) = 0) then Exit;
 
-    tmpParentID:= 10000000;//задаем макс.вероятное значение
+    tmpParentID:= 10000000;//setting the max.probable value
 
-    //ищем наименьший ParentID (имеют root-узлы)
+    //we are looking for the smallest ParentID (which root nodes have)
     for i:= 0 to High(aRecArr) do
       if (aRecArr[i].ParentID < tmpParentID) then tmpParentID:= aRecArr[i].ParentID;
 
-    //ищем root-узлы
+    //looking for root nodes
     if (GetChildRecords(tmpParentID,aRecArr,tmpRecArr) = 0) then Exit;
 
-    AddNodeFromArray(tmpParentID);//ищем дочерние записи
+    AddNodeFromArray(tmpParentID);//looking for child records
   finally
     aTree.EndUpdate;
   end;
